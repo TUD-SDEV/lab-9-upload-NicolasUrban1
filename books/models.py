@@ -1,9 +1,7 @@
 import uuid
 from django.db import models
 from django.urls import reverse
-# Create your models here.
 cover = models.ImageField(upload_to='covers/', blank=True)
-
 class Book(models.Model):
     id = models.UUIDField(primary_key=True,
         default=uuid.uuid4,
@@ -19,3 +17,8 @@ class Book(models.Model):
         
     def get_absolute_url(self):
         return reverse('book_detail', args=[str(self.id)])
+
+class SearchResultsListView(ListView):
+    model = Book
+    context_object_name = 'book_list'
+    template_name = 'books/search_results.html'
